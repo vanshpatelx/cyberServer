@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-const { Command } = require('commander');
-const simpleGit = require('simple-git');
-const path = require('path');
-const fs = require('fs-extra');
-const { execSync } = require('child_process');
-const inquirer = require('inquirer');
-const chalk = require('chalk');
-const figlet = require('figlet');
+import { Command } from 'commander';
+import simpleGit from 'simple-git';
+import path from 'path';
+import fs from 'fs-extra';
+import { execSync } from 'child_process';
+import inquirer from 'inquirer';
+import chalk from 'chalk';
+import figlet from 'figlet';
 
 const git = simpleGit();
 
