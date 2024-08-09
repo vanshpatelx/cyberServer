@@ -1,0 +1,22 @@
+{
+  "name": "cyber-cli",
+  "version": "0.0.1",
+  "bin": {
+    "create-cyberserver": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "inquirer": "^8.2.0",
+    "simple-git": "^3.25.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.5",
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5"
+  }
+}
