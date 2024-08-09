@@ -1,0 +1,32 @@
+# Node modules for all packages
+/node_modules/
+
+# Build output for all packages
+/dist/
+/build/
+/out/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.*.local
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor folders
+/.idea/
+/.vscode/
+
+# Dependency directories for npm or yarn
+package-lock.json
+yarn.lock
+
+# Exclude the monorepo-specific lock file if using pnpm
+.pnpm-debug.log
+.pnpm-store/
