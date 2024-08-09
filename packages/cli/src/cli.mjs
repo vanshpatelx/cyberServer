@@ -8,14 +8,42 @@ import { execSync } from 'child_process';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import figlet from 'figlet';
+import boxen from 'boxen';
 
+// Initialize git
 const git = simpleGit();
 
+// Command-line program setup
 const program = new Command();
 
-// Display cool header
-console.log(chalk.cyan(figlet.textSync('CyberServer CLI', { horizontalLayout: 'full' })));
+// Futuristic header and design
+const header = figlet.textSync('Cyber Server', { horizontalLayout: 'full' });
+const headerBox = boxen(chalk.blue.bold(header), {
+  padding: 1,
+  margin: 1,
+  borderStyle: 'double',
+  borderColor: 'cyan',
+  backgroundColor: 'black'
+});
 
+// Futuristic symbols and text
+const subHeader = '🚀 Seamless and Secure Server Creation 🌐';
+const authorInfo = '✨ by Vansh Patel & Team ✨';
+
+const subHeaderBox = boxen(chalk.cyanBright(subHeader + '\n' + authorInfo), {
+  padding: 1,
+  margin: 1,
+  borderStyle: 'single',
+  borderColor: 'blue',
+  backgroundColor: 'black'
+});
+
+// Display header and subheader
+console.log(headerBox);
+console.log(subHeaderBox);
+console.log('\n');
+
+// CLI description
 program
   .version('1.0.0')
   .description('CLI for creating CyberServer projects');
@@ -57,21 +85,21 @@ program
     const projectPath = path.join(process.cwd(), name);
 
     fs.ensureDirSync(projectPath);
-    console.log(chalk.green(`Cloning repository for ${type} into ${tempClonePath}`));
+    console.log(chalk.green(`🔄 Cloning repository for ${type} into ${tempClonePath}`));
     await git.clone(repoUrl, tempClonePath);
 
     const sourcePath = path.join(tempClonePath, folderPath);
-    console.log(chalk.yellow(`Copying files from ${sourcePath} to ${projectPath}`));
+    console.log(chalk.yellow(`📂 Copying files from ${sourcePath} to ${projectPath}`));
     fs.copySync(sourcePath, projectPath);
 
-    console.log(chalk.blue('Removing temporary cloned repository...'));
+    console.log(chalk.blue('🗑️ Removing temporary cloned repository...'));
     fs.removeSync(tempClonePath);
 
     process.chdir(projectPath);
-    console.log(chalk.blue('Installing dependencies using Yarn...'));
+    console.log(chalk.blue('🔧 Installing dependencies using Yarn...'));
     execSync('yarn install', { stdio: 'inherit' });
 
-    console.log(chalk.green('Project created successfully!'));
+    console.log(chalk.green('🚀 Project created successfully!'));
   });
 
 program.parse(process.argv);

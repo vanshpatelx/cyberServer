@@ -1,4 +1,3 @@
-// src/CyberServer.ts
 import express, { Application, Request, Response, NextFunction, RequestHandler } from 'express';
 import https from 'https';
 import cors, { CorsOptions } from 'cors';
@@ -11,7 +10,7 @@ export interface CyberServerConfig {
     port?: number;
     httpsOptions?: https.ServerOptions;
     corsOptions?: CorsOptions;
-    helmetOptions?: HelmetOptions;
+    helmetOptions?: HelmetOptions; // Updated to helmet.HelmetOptions or just use `any`
     compressionOptions?: CompressionOptions;
     bodyParserJsonOptions?: OptionsJson;
     bodyParserUrlencodedOptions?: OptionsUrlencoded;
@@ -37,7 +36,7 @@ export class CyberServer {
     };
 
     private defaultHelmetOptions: HelmetOptions = {
-        contentSecurityPolicy: false,
+        contentSecurityPolicy: false, // or provide a valid object if needed
     };
 
     private defaultCompressionOptions: CompressionOptions = {
@@ -119,7 +118,7 @@ export class CyberServer {
         const serverPort = this.config.port || 3000;
         if (this.config.httpsOptions) {
             https.createServer(this.config.httpsOptions, this.app).listen(serverPort, () => {
-                console.log(`CyberServer running securely on port ${serverPort}`);
+                console.log(`🚀 CyberServer running securely on port ${serverPort}`);
             });
         } else {
             this.app.listen(serverPort, () => {

@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CyberServer = void 0;
-// src/CyberServer.ts
 const express_1 = __importDefault(require("express"));
 const https_1 = __importDefault(require("https"));
 const cors_1 = __importDefault(require("cors"));
@@ -21,7 +20,7 @@ class CyberServer {
             allowedHeaders: ['Content-Type', 'Authorization'],
         };
         this.defaultHelmetOptions = {
-            contentSecurityPolicy: false,
+            contentSecurityPolicy: false, // or provide a valid object if needed
         };
         this.defaultCompressionOptions = {
             level: 6,
@@ -88,7 +87,7 @@ class CyberServer {
         const serverPort = this.config.port || 3000;
         if (this.config.httpsOptions) {
             https_1.default.createServer(this.config.httpsOptions, this.app).listen(serverPort, () => {
-                console.log(`CyberServer running securely on port ${serverPort}`);
+                console.log(`🚀 CyberServer running securely on port ${serverPort}`);
             });
         }
         else {
