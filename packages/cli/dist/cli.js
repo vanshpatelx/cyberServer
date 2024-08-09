@@ -13,20 +13,32 @@ var fs = require('fs-extra');
 var _require2 = require('child_process'),
   execSync = _require2.execSync;
 var inquirer = require('inquirer');
+var chalk = require('chalk');
+var figlet = require('figlet');
 var git = simpleGit();
 var program = new Command();
+
+// Display cool header
+console.log(chalk.cyan(figlet.textSync('CyberServer CLI', {
+  horizontalLayout: 'full'
+})));
 program.version('1.0.0').description('CLI for creating CyberServer projects');
 program.command('create').description('Create a new CyberServer project').action( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-  var repoUrls, _yield$inquirer$promp, type, name, repoUrl, projectPath;
+  var repoUrls, folderPaths, _yield$inquirer$promp, type, name, repoUrl, folderPath, tempClonePath, projectPath, sourcePath;
   return _regeneratorRuntime().wrap(function _callee$(_context) {
     while (1) switch (_context.prev = _context.next) {
       case 0:
         repoUrls = {
-          'HTTP Server': 'https://github.com/your-username/http-server-repo.git',
-          'GraphQL Server': 'https://github.com/your-username/graphql-server-repo.git',
-          'WebSocket Server': 'https://github.com/your-username/websocket-server-repo.git'
+          'HTTP Server': 'https://github.com/vanshpatelx/cyberServer.git',
+          'GraphQL Server': 'https://github.com/vanshpatelx/cyberServer.git',
+          'WebSocket Server': 'https://github.com/vanshpatelx/cyberServer.git'
         };
-        _context.next = 3;
+        folderPaths = {
+          'HTTP Server': 'packages/examples/http-server',
+          'GraphQL Server': 'packages/examples/graphql-server',
+          'WebSocket Server': 'packages/examples/websocket-server'
+        };
+        _context.next = 4;
         return inquirer.prompt([{
           type: 'list',
           name: 'type',
@@ -38,24 +50,31 @@ program.command('create').description('Create a new CyberServer project').action
           message: 'Enter the project name:',
           "default": 'my-cyberserver-project'
         }]);
-      case 3:
+      case 4:
         _yield$inquirer$promp = _context.sent;
         type = _yield$inquirer$promp.type;
         name = _yield$inquirer$promp.name;
         repoUrl = repoUrls[type];
+        folderPath = folderPaths[type];
+        tempClonePath = path.join(process.cwd(), 'temp-repo');
         projectPath = path.join(process.cwd(), name);
         fs.ensureDirSync(projectPath);
-        console.log("Cloning repository for ".concat(type, " into ").concat(projectPath));
-        _context.next = 12;
-        return git.clone(repoUrl, projectPath);
-      case 12:
+        console.log(chalk.green("Cloning repository for ".concat(type, " into ").concat(tempClonePath)));
+        _context.next = 15;
+        return git.clone(repoUrl, tempClonePath);
+      case 15:
+        sourcePath = path.join(tempClonePath, folderPath);
+        console.log(chalk.yellow("Copying files from ".concat(sourcePath, " to ").concat(projectPath)));
+        fs.copySync(sourcePath, projectPath);
+        console.log(chalk.blue('Removing temporary cloned repository...'));
+        fs.removeSync(tempClonePath);
         process.chdir(projectPath);
-        console.log('Installing dependencies...');
-        execSync('npm install', {
+        console.log(chalk.blue('Installing dependencies using Yarn...'));
+        execSync('yarn install', {
           stdio: 'inherit'
         });
-        console.log('Project created successfully!');
-      case 16:
+        console.log(chalk.green('Project created successfully!'));
+      case 24:
       case "end":
         return _context.stop();
     }

@@ -6,10 +6,16 @@ const path = require('path');
 const fs = require('fs-extra');
 const { execSync } = require('child_process');
 const inquirer = require('inquirer');
+const chalk = require('chalk');
+const figlet = require('figlet');
 
 const git = simpleGit();
 
 const program = new Command();
+
+// Display cool header
+console.log(chalk.cyan(figlet.textSync('CyberServer CLI', { horizontalLayout: 'full' })));
+
 program
   .version('1.0.0')
   .description('CLI for creating CyberServer projects');
@@ -19,9 +25,15 @@ program
   .description('Create a new CyberServer project')
   .action(async () => {
     const repoUrls = {
-      'HTTP Server': 'https://github.com/your-username/http-server-repo.git',
-      'GraphQL Server': 'https://github.com/your-username/graphql-server-repo.git',
-      'WebSocket Server': 'https://github.com/your-username/websocket-server-repo.git',
+      'HTTP Server': 'https://github.com/vanshpatelx/cyberServer.git',
+      'GraphQL Server': 'https://github.com/vanshpatelx/cyberServer.git',
+      'WebSocket Server': 'https://github.com/vanshpatelx/cyberServer.git',
+    };
+
+    const folderPaths = {
+      'HTTP Server': 'packages/examples/http-server',
+      'GraphQL Server': 'packages/examples/graphql-server',
+      'WebSocket Server': 'packages/examples/websocket-server',
     };
 
     const { type, name } = await inquirer.prompt([
@@ -40,17 +52,26 @@ program
     ]);
 
     const repoUrl = repoUrls[type];
+    const folderPath = folderPaths[type];
+    const tempClonePath = path.join(process.cwd(), 'temp-repo');
     const projectPath = path.join(process.cwd(), name);
 
     fs.ensureDirSync(projectPath);
-    console.log(`Cloning repository for ${type} into ${projectPath}`);
-    await git.clone(repoUrl, projectPath);
+    console.log(chalk.green(`Cloning repository for ${type} into ${tempClonePath}`));
+    await git.clone(repoUrl, tempClonePath);
+
+    const sourcePath = path.join(tempClonePath, folderPath);
+    console.log(chalk.yellow(`Copying files from ${sourcePath} to ${projectPath}`));
+    fs.copySync(sourcePath, projectPath);
+
+    console.log(chalk.blue('Removing temporary cloned repository...'));
+    fs.removeSync(tempClonePath);
 
     process.chdir(projectPath);
-    console.log('Installing dependencies...');
-    execSync('npm install', { stdio: 'inherit' });
+    console.log(chalk.blue('Installing dependencies using Yarn...'));
+    execSync('yarn install', { stdio: 'inherit' });
 
-    console.log('Project created successfully!');
+    console.log(chalk.green('Project created successfully!'));
   });
 
 program.parse(process.argv);

@@ -1,8 +1,8 @@
 {
-  "name": "cyber-cli",
-  "version": "0.0.1",
+  "name": "cyberserver-cli",
+  "version": "0.0.3",
   "bin": {
-    "create-cyberserver": "./dist/cli.js"
+    "create-cyberserver": "dist/cli.js"
   },
   "scripts": {
     "build": "babel src --out-dir dist",
