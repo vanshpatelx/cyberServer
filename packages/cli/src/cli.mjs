@@ -60,6 +60,7 @@ program
 
     const folderPaths = {
       'HTTP Server': 'packages/examples/http-server',
+      'HTTP Cluster Server': 'packages/examples/http-cluster',
       'GraphQL Server': 'packages/examples/graphql-server',
       'WebSocket Server': 'packages/examples/websocket-server',
     };
