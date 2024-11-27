@@ -129,7 +129,6 @@ const cluster_1 = __importDefault(require("cluster"));
 const os_1 = __importDefault(require("os"));
 class CyberServer {
     constructor(config = {}) {
-        // Default configurations for middleware
         this.defaultCorsOptions = {
             origin: '*',
             methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -207,13 +206,13 @@ class CyberServer {
         const numCPUs = os_1.default.cpus().length;
         console.log(`Primary process ${process.pid} is running with ${numCPUs} CPUs available`);
         for (let i = 0; i < numCPUs; i++) {
-            cluster_1.default.fork(); // Fork a worker process for each CPU core
+            cluster_1.default.fork();
         }
         cluster_1.default.on('exit', (worker, code, signal) => {
             console.log(`Worker ${worker.process.pid} died with code ${code} and signal ${signal}`);
             if (this.config.restartOnFail !== false) {
                 console.log(`Starting a new worker`);
-                cluster_1.default.fork(); // Restart a new worker on failure
+                cluster_1.default.fork();
             }
         });
     }

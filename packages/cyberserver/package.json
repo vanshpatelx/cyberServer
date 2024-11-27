@@ -1,6 +1,6 @@
 {
   "name": "cyberserver",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
@@ -19,7 +19,8 @@
     "express": "^4.19.2",
     "helmet": "^7.1.0",
     "https": "^1.0.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.5",
@@ -28,6 +29,7 @@
     "@types/cors": "^2.8.17",
     "@types/helmet": "^0.0.48",
     "@types/morgan": "^1.9.9",
+    "@types/ws": "^8.5.12",
     "typescript": "^5.5.4"
   }
 }

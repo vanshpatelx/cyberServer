@@ -56,6 +56,7 @@ program
       'HTTP Server': 'https://github.com/vanshpatelx/cyberServer.git',
       'GraphQL Server': 'https://github.com/vanshpatelx/cyberServer.git',
       'WebSocket Server': 'https://github.com/vanshpatelx/cyberServer.git',
+      'HTTP Cluster Server': 'https://github.com/vanshpatelx/cyberServer.git',
     };
 
     const folderPaths = {
@@ -98,7 +99,7 @@ program
 
     process.chdir(projectPath);
     console.log(chalk.blue('🔧 Installing dependencies using Yarn...'));
-    execSync('yarn install', { stdio: 'inherit' });
+    execSync('npm install', { stdio: 'inherit' });
 
     console.log(chalk.green('🚀 Project created successfully!'));
   });

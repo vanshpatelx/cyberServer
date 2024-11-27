@@ -7,5 +7,12 @@
   ],
   "scripts": {
     "build": "lerna run build"
+  },
+  "dependencies": {
+    "@types/amqplib": "^0.10.5",
+    "@types/pg": "^8.11.10",
+    "amqplib": "^0.10.5",
+    "ioredis": "^5.4.1",
+    "pg": "^8.13.1"
   }
 }

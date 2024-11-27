@@ -164,10 +164,9 @@ export interface CyberServerConfig {
 }
 
 export class CyberServer {
-    private app: Application;
-    private config: CyberServerConfig;
+    protected app: Application;
+    protected config: CyberServerConfig;
 
-    // Default configurations for middleware
     private defaultCorsOptions: CorsOptions = {
         origin: '*',
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -261,14 +260,14 @@ export class CyberServer {
         console.log(`Primary process ${process.pid} is running with ${numCPUs} CPUs available`);
 
         for (let i = 0; i < numCPUs; i++) {
-            cluster.fork(); // Fork a worker process for each CPU core
+            cluster.fork();
         }
 
         cluster.on('exit', (worker, code, signal) => {
             console.log(`Worker ${worker.process.pid} died with code ${code} and signal ${signal}`);
             if (this.config.restartOnFail !== false) {
                 console.log(`Starting a new worker`);
-                cluster.fork(); // Restart a new worker on failure
+                cluster.fork(); 
             }
         });
     }
